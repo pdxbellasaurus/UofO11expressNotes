@@ -27,22 +27,38 @@ app.get('/notes', (req, res) => {
 
 //handle api
 app.get('/api/notes', (req, res) => 
-res.json(JSON.parse(fs.readFileSync('./db/db.json'))
-));
+res.json(note)
+);
 
-app.get('/api/notes/:id', (req, res) =>
-res.json(notes[Number(req.params.id)]));
+
 
 //handle post - add new note
 app.post('/api/notes', (req, res) => {
   const newNote = req.body;  
   note.push(newNote);
+
   fs.writeFileSync('./db/db.json', JSON.stringify(note), err => {
     if (err)
     throw (err);
   });  
   res.json(newNote);
 });
+
+// handle delete
+
+app.delete("/api/notes/:id", (req, res) => {
+  const deleteNote = note
+  .findIndex(i => i.id == req.params.id);  
+  note.splice(deleteNote, 1);
+
+  fs.writeFileSync('./db/db.json', JSON.stringify(note), err => {
+    if (err)
+      throw (err);
+  });
+  return res.json(true);
+});
+
+
 
 //Start Server
 app.listen(PORT, () => {

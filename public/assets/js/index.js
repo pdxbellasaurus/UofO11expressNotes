@@ -27,7 +27,7 @@ jQuery(document).ready(function ($) {
   const deleteNote = (id) => {
     return $.ajax({
       url: `/api/notes/${id}`,
-      method: 'DELTE',
+      method: 'DELETE',
     });
   };
 
@@ -41,15 +41,16 @@ jQuery(document).ready(function ($) {
       noteText.val(activeNote.text);
     }
     else {
+      noteTitle.attr('readonly', false);
+      noteText.attr('readonly', false);
       noteTitle.val('');
       noteText.val('');
     }
   };
 
   const handleNoteSave = () => {
-
-    const newNote = {
-      // id: id.val(),
+      const newNote = {
+      id: Math.floor(Math.random() * 815),
       title: noteTitle.val(),
       text: noteText.val(),
     };
@@ -131,8 +132,6 @@ jQuery(document).ready(function ($) {
 
     notes.forEach((note) => {
       const li = createLi(note.title).data(note);
-      // li.dataset.note = JSON.stringify(note);
-
       noteListItems.push(li);
     });
     noteList.append(noteListItems);
@@ -153,6 +152,3 @@ jQuery(document).ready(function ($) {
 
   getAndRenderNotes();
 });
-
-
-
