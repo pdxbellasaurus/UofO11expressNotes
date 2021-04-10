@@ -17,7 +17,7 @@ app.use(express.static('public'));
 
 // ROUTES
 // handle htmls
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './index.html'));
 });
 
